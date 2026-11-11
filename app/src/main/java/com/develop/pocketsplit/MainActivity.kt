@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.develop.pocketsplit.ui.screen.FinanceScreen
+import com.develop.pocketsplit.ui.screen.login.LoginScreen
 import com.develop.pocketsplit.ui.theme.PocketSplitTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                        FinanceScreen(
+                        LoginScreen(
                             modifier = Modifier.padding(innerPadding)
                         )
                     }
