@@ -10,6 +10,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.develop.pocketsplit.ui.navigation.Routes
+import com.develop.pocketsplit.ui.screen.home.HomeScreen
 import com.develop.pocketsplit.ui.screen.login.LoginScreen
 import com.develop.pocketsplit.ui.theme.PocketSplitTheme
 
@@ -24,9 +29,31 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                        LoginScreen(
+                        val nav = rememberNavController()
+
+                        NavHost(
+                            navController = nav,
+                            startDestination = Routes.LOGIN,
                             modifier = Modifier.padding(innerPadding)
-                        )
+                        ) {
+                            composable(Routes.LOGIN) {
+                                LoginScreen(
+                                    onContinue = {
+                                        nav.navigate(Routes.HOME) {
+                                            popUpTo(Routes.LOGIN) { inclusive = true }
+                                        }
+                                    },
+                                    onContinueAsGuest = {
+                                        nav.navigate(Routes.HOME) {
+                                            popUpTo(Routes.LOGIN) { inclusive = true }
+                                        }
+                                    }
+                                )
+                            }
+                            composable(Routes.HOME) {
+                                HomeScreen()
+                            }
+                        }
                     }
                 }
             }

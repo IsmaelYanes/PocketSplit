@@ -7,4 +7,8 @@
     <string name="login_password">Contraseña</string>
     <string name="login_continue">Continuar</string>
     <string name="login_continue_guest">Continuar sin cuenta</string>
+
+    <!-- Pantalla de inicio -->
+    <string name="home_subtitle">Tus gestiones</string>
+    <string name="home_add">Añadir gestión</string>
 </resources>
