@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.develop.pocketsplit.ui.navigation.Routes
+import com.develop.pocketsplit.ui.screen.FinanceScreen
 import com.develop.pocketsplit.ui.screen.home.HomeScreen
 import com.develop.pocketsplit.ui.screen.login.LoginScreen
 import com.develop.pocketsplit.ui.theme.PocketSplitTheme
@@ -51,7 +52,10 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             composable(Routes.HOME) {
-                                HomeScreen()
+                                HomeScreen(onNavigateToFinance = { nav.navigate(Routes.FINANCE) })
+                            }
+                            composable(Routes.FINANCE) {
+                                FinanceScreen(onBack = {nav.popBackStack()})
                             }
                         }
                     }

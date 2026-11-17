@@ -55,7 +55,8 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     state: HomeUiState = HomeUiState.preview(),
     onItemClick: (HomeItem) -> Unit = {},
-    onAddClick: () -> Unit = {}
+    onAddClick: () -> Unit = {},
+    onNavigateToFinance: () -> Unit = {},
 ) {
     Column(
         modifier = modifier
@@ -102,7 +103,7 @@ fun HomeScreen(
                 RoundedListItem(
                     text = item.title,
                     icon = if (item.isGroup) Icons.Default.Group else Icons.Default.Person,
-                    onClick = { onItemClick(item) }
+                    onClick = onNavigateToFinance
                 )
             }
             // Botón "+" debajo de la lista, como en el mockup

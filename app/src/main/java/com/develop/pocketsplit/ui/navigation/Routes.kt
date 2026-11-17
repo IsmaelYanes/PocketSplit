@@ -4,4 +4,5 @@ package com.develop.pocketsplit.ui.navigation
 object Routes {
     const val LOGIN = "login"
     const val HOME = "home"
+    const val FINANCE ="finance"
 }
