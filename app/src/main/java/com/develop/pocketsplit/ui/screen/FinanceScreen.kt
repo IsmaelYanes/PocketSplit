@@ -3,8 +3,11 @@ package com.develop.pocketsplit.ui.screen
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -15,6 +18,7 @@ import com.develop.pocketsplit.ui.viewmodel.FinanceViewModel
 @Composable
 fun FinanceScreen(
     modifier: Modifier = Modifier, // 1. Añadimos el modifier aquí
+    financeName: String = "Nombre de la finanza", // Placeholder: se sustituirá por el nombre real de la finanza
     viewModel: FinanceViewModel = viewModel(),
     onBack: () -> Unit
 ) {
@@ -30,8 +34,16 @@ fun FinanceScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // Título de la App
-        Text(text = "PocketSplit - Finanzas", style = MaterialTheme.typography.headlineMedium)
+        // Cabecera con flecha de volver y nombre de la finanza
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            IconButton(onClick = onBack) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Volver"
+                )
+            }
+            Text(text = financeName, style = MaterialTheme.typography.headlineMedium)
+        }
         Spacer(modifier = Modifier.height(16.dp))
 
         // Tarjeta de Balance
