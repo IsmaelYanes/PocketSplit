@@ -8,13 +8,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.develop.pocketsplit.model.CategoryType
 import com.develop.pocketsplit.ui.viewmodel.FinanceViewModel
 
 @Composable
 fun FinanceScreen(
     modifier: Modifier = Modifier, // 1. Añadimos el modifier aquí
-    viewModel: FinanceViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    viewModel: FinanceViewModel = viewModel(),
+    onBack: () -> Unit
 ) {
     var description by remember { mutableStateOf("") }
     var amountText by remember { mutableStateOf("") }
