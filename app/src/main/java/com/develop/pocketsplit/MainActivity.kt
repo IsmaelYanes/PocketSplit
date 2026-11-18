@@ -12,9 +12,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.develop.pocketsplit.ui.components.BottomNavigationBar
 import com.develop.pocketsplit.ui.navigation.Routes
 import com.develop.pocketsplit.ui.screen.FinanceScreen
+import com.develop.pocketsplit.ui.screen.SettingsScreen
+import com.develop.pocketsplit.ui.screen.StatisticsScreen
 import com.develop.pocketsplit.ui.screen.home.HomeScreen
 import com.develop.pocketsplit.ui.screen.login.LoginScreen
 import com.develop.pocketsplit.ui.theme.PocketSplitTheme
@@ -29,9 +33,25 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                        val nav = rememberNavController()
+                    val nav = rememberNavController()
+                    val currentRoute = nav.currentBackStackEntryAsState().value?.destination?.route
 
+                    Scaffold(
+                        modifier = Modifier.fillMaxSize(),
+                        bottomBar = {
+                            if (currentRoute != null && currentRoute != Routes.LOGIN) {
+                                BottomNavigationBar(
+                                    currentRoute = currentRoute,
+                                    onNavigate = { route ->
+                                        nav.navigate(route) {
+                                            popUpTo(Routes.HOME)
+                                            launchSingleTop = true
+                                        }
+                                    }
+                                )
+                            }
+                        }
+                    ) { innerPadding ->
                         NavHost(
                             navController = nav,
                             startDestination = Routes.LOGIN,
@@ -56,6 +76,12 @@ class MainActivity : ComponentActivity() {
                             }
                             composable(Routes.FINANCE) {
                                 FinanceScreen(onBack = {nav.popBackStack()})
+                            }
+                            composable(Routes.STATISTICS) {
+                                StatisticsScreen()
+                            }
+                            composable(Routes.SETTINGS) {
+                                SettingsScreen()
                             }
                         }
                     }

@@ -5,4 +5,6 @@ object Routes {
     const val LOGIN = "login"
     const val HOME = "home"
     const val FINANCE ="finance"
+    const val STATISTICS = "statistics"
+    const val SETTINGS = "settings"
 }
