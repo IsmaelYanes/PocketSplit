@@ -11,4 +11,12 @@
     <!-- Pantalla de inicio -->
     <string name="home_subtitle">Tus gestiones</string>
     <string name="home_add">Añadir gestión</string>
+
+    <!-- Navegación inferior -->
+    <string name="navigation_home">Inicio</string>
+
+    <!-- Pantallas provisionales -->
+    <string name="statistics_title">Estadísticas</string>
+    <string name="statistics_pending">Esta pantalla está pendiente de desarrollo.</string>
+    <string name="settings_title">Ajustes</string>
 </resources>
