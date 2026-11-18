@@ -10,21 +10,25 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.develop.pocketsplit.R
 import com.develop.pocketsplit.model.CategoryType
 import com.develop.pocketsplit.ui.viewmodel.FinanceViewModel
 
 @Composable
 fun FinanceScreen(
     modifier: Modifier = Modifier, // 1. Añadimos el modifier aquí
-    financeName: String = "Nombre de la finanza", // Placeholder: se sustituirá por el nombre real de la finanza
+    financeName: String? = null, // Placeholder: se sustituirá por el nombre real de la finanza
     viewModel: FinanceViewModel = viewModel(),
     onBack: () -> Unit
 ) {
     var description by remember { mutableStateOf("") }
     var amountText by remember { mutableStateOf("") }
     var selectedType by remember { mutableStateOf(CategoryType.EXPENSE) }
+
+    val displayName = financeName ?: stringResource(R.string.finance_name_placeholder)
 
     // Seleccionamos por defecto la primera categoría disponible
     val selectedCategory = viewModel.categories.firstOrNull()
@@ -39,10 +43,10 @@ fun FinanceScreen(
             IconButton(onClick = onBack) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Volver"
+                    contentDescription = stringResource(R.string.finance_back)
                 )
             }
-            Text(text = financeName, style = MaterialTheme.typography.headlineMedium)
+            Text(text = displayName, style = MaterialTheme.typography.headlineMedium)
         }
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -52,7 +56,10 @@ fun FinanceScreen(
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(text = "Balance Total", style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    text = stringResource(R.string.finance_total_balance),
+                    style = MaterialTheme.typography.bodyLarge
+                )
                 Text(
                     text = "$${viewModel.currentBalance}",
                     style = MaterialTheme.typography.headlineLarge,
@@ -64,13 +71,16 @@ fun FinanceScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         // Formulario rápido para agregar transacción
-        Text(text = "Agregar Movimiento", style = MaterialTheme.typography.titleMedium)
+        Text(
+            text = stringResource(R.string.finance_add_title),
+            style = MaterialTheme.typography.titleMedium
+        )
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
             value = description,
             onValueChange = { description = it },
-            label = { Text("Descripción (ej. Café, Nómina)") },
+            label = { Text(stringResource(R.string.finance_description_label)) },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -79,7 +89,7 @@ fun FinanceScreen(
         OutlinedTextField(
             value = amountText,
             onValueChange = { amountText = it },
-            label = { Text("Monto") },
+            label = { Text(stringResource(R.string.finance_amount_label)) },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -90,13 +100,13 @@ fun FinanceScreen(
                 onClick = { selectedType = CategoryType.INCOME },
                 colors = ButtonDefaults.buttonColors(containerColor = if (selectedType == CategoryType.INCOME) Color.Green else Color.Gray)
             ) {
-                Text("Ingreso")
+                Text(stringResource(R.string.finance_income))
             }
             Button(
                 onClick = { selectedType = CategoryType.EXPENSE },
                 colors = ButtonDefaults.buttonColors(containerColor = if (selectedType == CategoryType.EXPENSE) Color.Red else Color.Gray)
             ) {
-                Text("Gasto")
+                Text(stringResource(R.string.finance_expense))
             }
         }
 
@@ -118,13 +128,16 @@ fun FinanceScreen(
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Guardar Transacción")
+            Text(stringResource(R.string.finance_save))
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
         // Lista de transacciones recientes
-        Text(text = "Movimientos Recientes", style = MaterialTheme.typography.titleMedium)
+        Text(
+            text = stringResource(R.string.finance_recent_title),
+            style = MaterialTheme.typography.titleMedium
+        )
         Spacer(modifier = Modifier.height(8.dp))
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {

@@ -19,4 +19,16 @@
     <string name="statistics_title">Estadísticas</string>
     <string name="statistics_pending">Esta pantalla está pendiente de desarrollo.</string>
     <string name="settings_title">Ajustes</string>
+
+    <!-- Pantalla de finanzas -->
+    <string name="finance_name_placeholder">Nombre de la finanza</string>
+    <string name="finance_back">Volver</string>
+    <string name="finance_total_balance">Balance Total</string>
+    <string name="finance_add_title">Agregar Movimiento</string>
+    <string name="finance_description_label">Descripción (ej. Café, Nómina)</string>
+    <string name="finance_amount_label">Monto</string>
+    <string name="finance_income">Ingreso</string>
+    <string name="finance_expense">Gasto</string>
+    <string name="finance_save">Guardar Transacción</string>
+    <string name="finance_recent_title">Movimientos Recientes</string>
 </resources>
