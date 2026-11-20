@@ -19,8 +19,8 @@ import com.develop.pocketsplit.ui.navigation.Routes
 import com.develop.pocketsplit.ui.screen.FinanceScreen
 import com.develop.pocketsplit.ui.screen.SettingsScreen
 import com.develop.pocketsplit.ui.screen.StatisticsScreen
-import com.develop.pocketsplit.ui.screen.home.HomeScreen
-import com.develop.pocketsplit.ui.screen.login.LoginScreen
+import com.develop.pocketsplit.ui.screen.HomeScreen
+import com.develop.pocketsplit.ui.screen.LoginScreen
 import com.develop.pocketsplit.ui.theme.PocketSplitTheme
 
 class MainActivity : ComponentActivity() {
