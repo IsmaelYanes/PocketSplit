@@ -48,7 +48,7 @@ import com.develop.pocketsplit.ui.viewmodel.HomeViewModel
 fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(),
-    onNavigateToFinance: () -> Unit = {}
+    onNavigateToFinance: (String) -> Unit = {}
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     var showAddDialog by rememberSaveable { mutableStateOf(false) }
@@ -56,7 +56,7 @@ fun HomeScreen(
     HomeContent(
         modifier = modifier,
         state = state,
-        onFinanceClick = { onNavigateToFinance() },
+        onFinanceClick = { onNavigateToFinance(it.id) },
         onAddClick = { showAddDialog = true }
     )
 

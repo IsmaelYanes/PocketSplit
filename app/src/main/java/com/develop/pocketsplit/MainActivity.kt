@@ -10,10 +10,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.develop.pocketsplit.ui.components.BottomNavigationBar
 import com.develop.pocketsplit.ui.navigation.Routes
 import com.develop.pocketsplit.ui.screen.FinanceScreen
@@ -72,10 +74,13 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             composable(Routes.HOME) {
-                                HomeScreen(onNavigateToFinance = { nav.navigate(Routes.FINANCE) })
+                                HomeScreen(onNavigateToFinance = { id -> nav.navigate(Routes.finance(id)) })
                             }
-                            composable(Routes.FINANCE) {
-                                FinanceScreen(onBack = {nav.popBackStack()})
+                            composable(
+                                route = Routes.FINANCE,
+                                arguments = listOf(navArgument(Routes.FINANCE_ID_ARG) { type = NavType.StringType })
+                            ) {
+                                FinanceScreen(onBack = { nav.popBackStack() })
                             }
                             composable(Routes.STATISTICS) {
                                 StatisticsScreen()

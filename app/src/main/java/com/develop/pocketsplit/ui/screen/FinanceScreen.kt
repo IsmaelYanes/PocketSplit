@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.develop.pocketsplit.R
 import com.develop.pocketsplit.model.CategoryType
@@ -19,8 +20,7 @@ import com.develop.pocketsplit.ui.viewmodel.FinanceViewModel
 
 @Composable
 fun FinanceScreen(
-    modifier: Modifier = Modifier, // 1. Añadimos el modifier aquí
-    financeName: String? = null, // Placeholder: se sustituirá por el nombre real de la finanza
+    modifier: Modifier = Modifier,
     viewModel: FinanceViewModel = viewModel(),
     onBack: () -> Unit
 ) {
@@ -28,7 +28,8 @@ fun FinanceScreen(
     var amountText by remember { mutableStateOf("") }
     var selectedType by remember { mutableStateOf(CategoryType.EXPENSE) }
 
-    val displayName = financeName ?: stringResource(R.string.finance_name_placeholder)
+    val finance by viewModel.finance.collectAsStateWithLifecycle()
+    val displayName = finance?.name ?: stringResource(R.string.finance_name_placeholder)
 
     // Seleccionamos por defecto la primera categoría disponible
     val selectedCategory = viewModel.categories.firstOrNull()
