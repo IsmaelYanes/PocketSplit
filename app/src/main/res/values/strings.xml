@@ -11,6 +11,7 @@
     <!-- Pantalla de inicio -->
     <string name="home_subtitle">Tus gestiones</string>
     <string name="home_add">Añadir gestión</string>
+    <string name="home_empty">Aún no tienes gestiones.</string>
 
     <!-- Navegación inferior -->
     <string name="navigation_home">Inicio</string>
