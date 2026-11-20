@@ -26,6 +26,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -35,6 +38,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.develop.pocketsplit.R
 import com.develop.pocketsplit.model.Finance
+import com.develop.pocketsplit.ui.components.AddFinanceDialog
 import com.develop.pocketsplit.ui.components.RoundedListItem
 import com.develop.pocketsplit.ui.theme.PocketSplitTheme
 import com.develop.pocketsplit.ui.viewmodel.HomeUiState
@@ -47,12 +51,24 @@ fun HomeScreen(
     onNavigateToFinance: () -> Unit = {}
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    var showAddDialog by rememberSaveable { mutableStateOf(false) }
+
     HomeContent(
         modifier = modifier,
         state = state,
         onFinanceClick = { onNavigateToFinance() },
-        onAddClick = { }
+        onAddClick = { showAddDialog = true }
     )
+
+    if (showAddDialog) {
+        AddFinanceDialog(
+            onDismiss = { showAddDialog = false },
+            onConfirm = { name, isGroup ->
+                viewModel.addFinance(name, isGroup)
+                showAddDialog = false
+            }
+        )
+    }
 }
 
 @Composable

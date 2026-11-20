@@ -13,6 +13,12 @@
     <string name="home_add">Añadir gestión</string>
     <string name="home_empty">Aún no tienes gestiones.</string>
 
+    <!-- Diálogo de creación-->
+    <string name="finance_name_label">Nombre</string>
+    <string name="finance_is_group">Gestión grupal</string>
+    <string name="common_create">Crear</string>
+    <string name="common_cancel">Cancelar</string>
+
     <!-- Navegación inferior -->
     <string name="navigation_home">Inicio</string>
 
