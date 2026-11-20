@@ -1,4 +1,4 @@
-package com.develop.pocketsplit.ui.screen.login
+package com.develop.pocketsplit.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
