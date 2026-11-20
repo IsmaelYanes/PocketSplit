@@ -10,5 +10,5 @@ data class Finance(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val name: String,
     val isGroup: Boolean,
-    val creationDate: String = LocalDate.now().toString()
+    val createdAt: Long = System.currentTimeMillis()
 )
