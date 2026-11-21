@@ -67,4 +67,12 @@ class FinanceViewModel(
         if (newName.isBlank()) return
         viewModelScope.launch { repository.renameFinance(current, newName) }
     }
+
+    // Borrar la finanza
+    fun deleteFinance(onDeleted: () -> Unit) {
+        viewModelScope.launch {
+            repository.deleteFinance(financeId)
+            onDeleted()
+        }
+    }
 }

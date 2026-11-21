@@ -18,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.develop.pocketsplit.R
 import com.develop.pocketsplit.model.CategoryType
+import com.develop.pocketsplit.ui.components.ConfirmDeleteDialog
 import com.develop.pocketsplit.ui.components.RenameFinanceDialog
 import com.develop.pocketsplit.ui.viewmodel.FinanceViewModel
 
@@ -35,6 +36,7 @@ fun FinanceScreen(
     val displayName = finance?.name ?: stringResource(R.string.finance_name_placeholder)
     var menuExpanded by remember { mutableStateOf(false) }
     var showRename by rememberSaveable { mutableStateOf(false) }
+    var showDelete by rememberSaveable { mutableStateOf(false) }
 
     // Seleccionamos por defecto la primera categoría disponible
     val selectedCategory = viewModel.categories.firstOrNull()
@@ -68,6 +70,11 @@ fun FinanceScreen(
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.finance_rename)) },
                         onClick = { menuExpanded = false; showRename = true }
+                    )
+
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.finance_delete)) },
+                        onClick = { menuExpanded = false; showDelete = true }
                     )
                 }
             }
@@ -196,6 +203,15 @@ fun FinanceScreen(
             currentName = finance?.name.orEmpty(),
             onDismiss = { showRename = false },
             onConfirm = { viewModel.renameFinance(it); showRename = false }
+        )
+    }
+
+    if (showDelete) {
+        ConfirmDeleteDialog(
+            title = stringResource(R.string.finance_delete_title),
+            message = stringResource(R.string.finance_delete_message, displayName),
+            onDismiss = { showDelete = false },
+            onConfirm = { showDelete = false; viewModel.deleteFinance(onDeleted = onBack) }
         )
     }
 }

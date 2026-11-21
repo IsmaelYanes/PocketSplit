@@ -25,6 +25,11 @@
     <string name="finance_rename">Renombrar</string>
     <string name="finance_rename_title">Renombrar gestión</string>
 
+    <!-- Diálogo de eliminación -->
+    <string name="finance_delete">Eliminar</string>
+    <string name="finance_delete_title">Eliminar gestión</string>
+    <string name="finance_delete_message">Se eliminará «%1$s». Esta acción no se puede deshacer.</string>
+
     <!-- Navegación inferior -->
     <string name="navigation_home">Inicio</string>
 
