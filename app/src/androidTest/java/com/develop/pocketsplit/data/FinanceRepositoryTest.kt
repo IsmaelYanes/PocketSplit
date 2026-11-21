@@ -104,4 +104,47 @@ class FinanceRepositoryTest {
 
         assertEquals(listOf("Primera", "Segunda"), names)
     }
+
+    @Test
+    fun addFinance_storesPersonalAndGroupTypes() = runBlocking {
+        repository.addFinance("Personal", isGroup = false)
+        repository.addFinance("Grupo", isGroup = true)
+
+        val finances = repository.observeFinances().first()
+
+        assertEquals(false, finances.first { it.name == "Personal" }.isGroup)
+        assertEquals(true, finances.first { it.name == "Grupo" }.isGroup)
+    }
+
+    @Test
+    fun renameFinance_keepsGroupFlag() = runBlocking {
+        repository.addFinance("Piso", isGroup = true)
+        val original = repository.observeFinances().first()[0]
+
+        repository.renameFinance(original, "Piso compartido")
+
+        assertTrue(repository.observeFinance(original.id).first()!!.isGroup)
+    }
+
+    @Test
+    fun renameFinance_keepsPersonalFlag() = runBlocking {
+        repository.addFinance("Gastos", isGroup = false)
+        val original = repository.observeFinances().first()[0]
+
+        repository.renameFinance(original, "Gastos personales")
+
+        assertEquals(false, repository.observeFinance(original.id).first()!!.isGroup)
+    }
+
+    @Test
+    fun deleteFinance_onlyRemovesTheTarget() = runBlocking {
+        repository.addFinance("Personal", isGroup = false)
+        repository.addFinance("Grupo", isGroup = true)
+        val target = repository.observeFinances().first().first { it.name == "Grupo" }
+
+        repository.deleteFinance(target.id)
+
+        val remaining = repository.observeFinances().first()
+        assertEquals(listOf("Personal"), remaining.map { it.name })
+    }
 }
