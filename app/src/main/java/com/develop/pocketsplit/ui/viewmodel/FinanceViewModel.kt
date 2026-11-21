@@ -18,6 +18,7 @@ import com.develop.pocketsplit.ui.navigation.Routes
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 
 class FinanceViewModel(
@@ -58,5 +59,12 @@ class FinanceViewModel(
         // Actualizar estados para refrescar la UI
         transactions = PocketSplitDatabaseLocal.transactions.toList()
         currentBalance = PocketSplitDatabaseLocal.getBalance()
+    }
+
+    // Renombrar la finanza
+    fun renameFinance(newName: String) {
+        val current = finance.value ?: return
+        if (newName.isBlank()) return
+        viewModelScope.launch { repository.renameFinance(current, newName) }
     }
 }

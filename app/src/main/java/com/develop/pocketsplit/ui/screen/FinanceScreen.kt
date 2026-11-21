@@ -5,8 +5,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.develop.pocketsplit.R
 import com.develop.pocketsplit.model.CategoryType
+import com.develop.pocketsplit.ui.components.RenameFinanceDialog
 import com.develop.pocketsplit.ui.viewmodel.FinanceViewModel
 
 @Composable
@@ -30,6 +33,8 @@ fun FinanceScreen(
 
     val finance by viewModel.finance.collectAsStateWithLifecycle()
     val displayName = finance?.name ?: stringResource(R.string.finance_name_placeholder)
+    var menuExpanded by remember { mutableStateOf(false) }
+    var showRename by rememberSaveable { mutableStateOf(false) }
 
     // Seleccionamos por defecto la primera categoría disponible
     val selectedCategory = viewModel.categories.firstOrNull()
@@ -39,7 +44,7 @@ fun FinanceScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // Cabecera con flecha de volver y nombre de la finanza
+        // Cabecera con flecha de volver, nombre de la finanza y menú de opciones
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBack) {
                 Icon(
@@ -47,7 +52,25 @@ fun FinanceScreen(
                     contentDescription = stringResource(R.string.finance_back)
                 )
             }
-            Text(text = displayName, style = MaterialTheme.typography.headlineMedium)
+            Text(
+                text = displayName,
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.weight(1f)
+            )
+            Box {
+                IconButton(onClick = { menuExpanded = true }) {
+                    Icon(
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = stringResource(R.string.finance_more_options)
+                    )
+                }
+                DropdownMenu(expanded = menuExpanded, onDismissRequest = { menuExpanded = false }) {
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.finance_rename)) },
+                        onClick = { menuExpanded = false; showRename = true }
+                    )
+                }
+            }
         }
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -167,5 +190,12 @@ fun FinanceScreen(
                 }
             }
         }
+    }
+    if (showRename) {
+        RenameFinanceDialog(
+            currentName = finance?.name.orEmpty(),
+            onDismiss = { showRename = false },
+            onConfirm = { viewModel.renameFinance(it); showRename = false }
+        )
     }
 }

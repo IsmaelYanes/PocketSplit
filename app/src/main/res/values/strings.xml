@@ -19,6 +19,12 @@
     <string name="common_create">Crear</string>
     <string name="common_cancel">Cancelar</string>
 
+    <!-- Diálogo de renombre -->
+    <string name="common_save">Guardar</string>
+    <string name="finance_more_options">Más opciones</string>
+    <string name="finance_rename">Renombrar</string>
+    <string name="finance_rename_title">Renombrar gestión</string>
+
     <!-- Navegación inferior -->
     <string name="navigation_home">Inicio</string>
 
