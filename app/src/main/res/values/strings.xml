@@ -49,4 +49,17 @@
     <string name="finance_expense">Gasto</string>
     <string name="finance_save">Guardar Transacción</string>
     <string name="finance_recent_title">Movimientos Recientes</string>
+
+    <!-- Gestión de usuarios: errores -->
+    <string name="auth_error_empty_name">Introduce tu nombre.</string>
+    <string name="auth_error_invalid_email">El correo electrónico no es válido.</string>
+    <string name="auth_error_empty_password">Introduce la contraseña.</string>
+    <string name="auth_error_weak_password">La contraseña debe tener al menos 6 caracteres.</string>
+    <string name="auth_error_invalid_credentials">Correo o contraseña incorrectos.</string>
+    <string name="auth_error_email_in_use">Ya existe una cuenta con ese correo.</string>
+    <string name="auth_error_network">Sin conexión. Comprueba tu red e inténtalo de nuevo.</string>
+    <string name="auth_error_too_many_requests">Demasiados intentos. Espera un momento y vuelve a probar.</string>
+    <string name="auth_error_recent_login">Por seguridad, vuelve a iniciar sesión para hacer este cambio.</string>
+    <string name="auth_error_not_logged_in">No hay ninguna sesión iniciada.</string>
+    <string name="auth_error_unknown">Ha ocurrido un error inesperado. Inténtalo de nuevo.</string>
 </resources>
