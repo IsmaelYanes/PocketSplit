@@ -86,7 +86,13 @@ class MainActivity : ComponentActivity() {
                                 StatisticsScreen()
                             }
                             composable(Routes.SETTINGS) {
-                                SettingsScreen()
+                                SettingsScreen(
+                                    onSignedOut = {
+                                        nav.navigate(Routes.LOGIN) {
+                                            popUpTo(Routes.HOME) { inclusive = true }
+                                        }
+                                    }
+                                )
                             }
                         }
                     }

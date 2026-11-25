@@ -1,32 +1,94 @@
 package com.develop.pocketsplit.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.develop.pocketsplit.R
+import com.develop.pocketsplit.model.User
+import com.develop.pocketsplit.ui.components.DeleteAccountDialog
+import com.develop.pocketsplit.ui.components.EditNameDialog
 import com.develop.pocketsplit.ui.theme.PocketSplitTheme
+import com.develop.pocketsplit.ui.viewmodel.AuthViewModel
 
 @Composable
-fun SettingsScreen(modifier: Modifier = Modifier) {
+fun SettingsScreen(
+    modifier: Modifier = Modifier,
+    viewModel: AuthViewModel = viewModel(),
+    onSignedOut: () -> Unit = {}
+) {
+    val user by viewModel.currentUser.collectAsStateWithLifecycle()
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+    var showEditName by rememberSaveable { mutableStateOf(false) }
+    var showDelete by rememberSaveable { mutableStateOf(false) }
+
+    SettingsContent(
+        user = user,
+        modifier = modifier,
+        onEditNameClick = { viewModel.clearMessages(); showEditName = true },
+        onLogoutClick = {
+            viewModel.logout()
+            onSignedOut()
+        },
+        onDeleteAccountClick = { viewModel.clearMessages(); showDelete = true },
+        onSignInClick = onSignedOut
+    )
+
+    if (showEditName) {
+        EditNameDialog(
+            currentName = user?.name.orEmpty(),
+            isLoading = state.isLoading,
+            error = state.error,
+            onConfirm = { newName -> viewModel.updateName(newName) { showEditName = false } },
+            onDismiss = { viewModel.clearMessages(); showEditName = false }
+        )
+    }
+
+    if (showDelete) {
+        DeleteAccountDialog(
+            isLoading = state.isLoading,
+            error = state.error,
+            onConfirm = { password ->
+                viewModel.deleteAccount(password) {
+                    showDelete = false
+                    onSignedOut()
+                }
+            },
+            onDismiss = { viewModel.clearMessages(); showDelete = false }
+        )
+    }
+}
+
+@Composable
+fun SettingsContent(
+    user: User?,
+    modifier: Modifier = Modifier,
+    onEditNameClick: () -> Unit = {},
+    onLogoutClick: () -> Unit = {},
+    onDeleteAccountClick: () -> Unit = {},
+    onSignInClick: () -> Unit = {}
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -39,32 +101,58 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.headlineMedium
         )
 
-        repeat(6) {
+        Text(
+            text = stringResource(R.string.settings_account),
+            style = MaterialTheme.typography.titleMedium
+        )
+
+        if (user == null) {
             Surface(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
                 color = MaterialTheme.colorScheme.surfaceVariant
             ) {
-                Row(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                Text(
+                    text = stringResource(R.string.settings_guest_message),
+                    modifier = Modifier.padding(16.dp),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+            Button(onClick = onSignInClick, modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.settings_sign_in))
+            }
+        } else {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                color = MaterialTheme.colorScheme.surfaceVariant
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    Surface(
-                        modifier = Modifier.size(24.dp),
-                        shape = CircleShape,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.2f)
-                    ) {}
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxWidth(0.35f)
-                            .height(8.dp),
-                        shape = RoundedCornerShape(4.dp),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.2f)
-                    ) {
-                        Box {}
-                    }
+                    Text(
+                        text = user.name.ifBlank { stringResource(R.string.settings_user_fallback_name) },
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Text(
+                        text = user.email,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
+            }
+            OutlinedButton(onClick = onEditNameClick, modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.settings_edit_name))
+            }
+            OutlinedButton(onClick = onLogoutClick, modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.settings_logout))
+            }
+            TextButton(onClick = onDeleteAccountClick, modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    text = stringResource(R.string.settings_delete_account),
+                    color = MaterialTheme.colorScheme.error
+                )
             }
         }
     }
@@ -73,5 +161,13 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 private fun SettingsScreenPreview() {
-    PocketSplitTheme { SettingsScreen() }
+    PocketSplitTheme {
+        SettingsContent(user = User("1", "Ana", "ana@correo.com"))
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun SettingsScreenGuestPreview() {
+    PocketSplitTheme { SettingsContent(user = null) }
 }

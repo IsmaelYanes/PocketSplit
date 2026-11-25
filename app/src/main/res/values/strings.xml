@@ -73,4 +73,31 @@
     <string name="auth_error_recent_login">Por seguridad, vuelve a iniciar sesión para hacer este cambio.</string>
     <string name="auth_error_not_logged_in">No hay ninguna sesión iniciada.</string>
     <string name="auth_error_unknown">Ha ocurrido un error inesperado. Inténtalo de nuevo.</string>
+
+    <!-- Ajustes -->
+    <string name="settings_account">Cuenta</string>
+    <string name="settings_back">Volver</string>
+    <string name="settings_guest_message">Estás usando la app sin cuenta. Inicia sesión para tener tu perfil.</string>
+    <string name="settings_sign_in">Iniciar sesión o registrarme</string>
+    <string name="settings_logout">Cerrar sesión</string>
+    <string name="settings_delete_account">Eliminar cuenta</string>
+    <string name="settings_delete_account_message">Se eliminará tu cuenta y tu perfil. Esta acción no se puede deshacer. Introduce tu contraseña para confirmar.</string>
+    <string name="settings_edit_name">Cambiar nombre</string>
+    <string name="settings_edit_name_title">Cambiar nombre</string>
+    <string name="settings_user_fallback_name">Sin nombre</string>
+
+    <!-- Ajustes: cuenta -->
+    <string name="account_personal_data">Datos personales</string>
+    <string name="account_field_name">Nombre</string>
+    <string name="account_field_email">Correo electrónico</string>
+    <string name="account_field_password">Contraseña</string>
+    <string name="account_password_mask">••••••••</string>
+    <string name="account_danger_zone">Zona de peligro</string>
+    <string name="account_change_email_title">Cambiar correo</string>
+    <string name="account_change_password_title">Cambiar contraseña</string>
+    <string name="account_new_email">Nuevo correo electrónico</string>
+    <string name="account_current_password">Contraseña actual</string>
+    <string name="account_new_password">Nueva contraseña</string>
+    <string name="account_email_verification_sent">Te hemos enviado un enlace a %1$s. El correo cambiará cuando lo confirmes.</string>
+    <string name="account_password_changed">Contraseña actualizada.</string>
 </resources>
