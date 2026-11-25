@@ -24,9 +24,9 @@ import com.develop.pocketsplit.ui.viewmodel.FinanceViewModel
 
 @Composable
 fun FinanceScreen(
+    onBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: FinanceViewModel = viewModel(),
-    onBack: () -> Unit
+    viewModel: FinanceViewModel = viewModel()
 ) {
     var description by remember { mutableStateOf("") }
     var amountText by remember { mutableStateOf("") }

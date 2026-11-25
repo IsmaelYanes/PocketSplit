@@ -50,6 +50,17 @@
     <string name="finance_save">Guardar Transacción</string>
     <string name="finance_recent_title">Movimientos Recientes</string>
 
+    <!-- Gestión de usuarios: pantalla de acceso -->
+    <string name="auth_title_login">Iniciar sesión</string>
+    <string name="auth_title_register">Crear cuenta</string>
+    <string name="auth_name">Nombre</string>
+    <string name="auth_submit_login">Entrar</string>
+    <string name="auth_submit_register">Registrarme</string>
+    <string name="auth_switch_to_register">¿No tienes cuenta? Regístrate</string>
+    <string name="auth_switch_to_login">¿Ya tienes cuenta? Inicia sesión</string>
+    <string name="auth_forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="auth_reset_sent">Te hemos enviado un correo para restablecer tu contraseña.</string>
+
     <!-- Gestión de usuarios: errores -->
     <string name="auth_error_empty_name">Introduce tu nombre.</string>
     <string name="auth_error_invalid_email">El correo electrónico no es válido.</string>
