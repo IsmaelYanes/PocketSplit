@@ -7,7 +7,10 @@ import com.develop.pocketsplit.model.AuthError
 data class AuthUiState(
     val isLoading: Boolean = false,
     val error: AuthError? = null,
-    val passwordResetSent: Boolean = false
+    val passwordResetSent: Boolean = false,
+    /** Correo al que se ha enviado el enlace de verificación tras pedir un cambio de correo. */
+    val emailVerificationSentTo: String? = null,
+    val passwordChanged: Boolean = false
 )
 
 @StringRes
