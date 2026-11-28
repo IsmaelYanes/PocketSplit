@@ -132,17 +132,8 @@ fun SettingsContent(
                 supportingText = user.email,
                 onClick = onOpenAccountClick
             )
-            OutlinedButton(onClick = onEditNameClick, modifier = Modifier.fillMaxWidth()) {
-                Text(stringResource(R.string.settings_edit_name))
-            }
             OutlinedButton(onClick = onLogoutClick, modifier = Modifier.fillMaxWidth()) {
                 Text(stringResource(R.string.settings_logout))
-            }
-            TextButton(onClick = onDeleteAccountClick, modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = stringResource(R.string.settings_delete_account),
-                    color = MaterialTheme.colorScheme.error
-                )
             }
         }
     }
