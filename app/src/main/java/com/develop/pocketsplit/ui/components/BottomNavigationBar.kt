@@ -36,7 +36,8 @@ fun BottomNavigationBar(currentRoute: String, onNavigate: (String) -> Unit) {
     NavigationBar {
         destinations.forEach { destination ->
             val selected = currentRoute == destination.route ||
-                (currentRoute == Routes.FINANCE && destination.route == Routes.HOME)
+                    (currentRoute == Routes.FINANCE && destination.route == Routes.HOME) ||
+                    (currentRoute == Routes.SETTINGS_ACCOUNT && destination.route == Routes.SETTINGS)
             NavigationBarItem(
                 selected = selected,
                 onClick = { onNavigate(destination.route) },

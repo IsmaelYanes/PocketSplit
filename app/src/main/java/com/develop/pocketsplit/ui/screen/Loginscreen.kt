@@ -56,7 +56,11 @@ fun LoginScreen(
         },
         onForgotPassword = viewModel::sendPasswordReset,
         onInputChanged = viewModel::clearMessages,
-        onContinueAsGuest = onContinueAsGuest
+        onContinueAsGuest = {
+            // Se recuerda la elección para no volver a mostrar el login al reabrir la app.
+            viewModel.continueAsGuest()
+            onContinueAsGuest()
+        }
     )
 }
 

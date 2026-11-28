@@ -8,6 +8,7 @@ object Routes {
     const val FINANCE = "finance/{$FINANCE_ID_ARG}"
     const val STATISTICS = "statistics"
     const val SETTINGS = "settings"
+    const val SETTINGS_ACCOUNT = "settings/account"
 
     fun finance(id: String) = "finance/$id"
 }
