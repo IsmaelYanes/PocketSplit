@@ -29,6 +29,7 @@ import com.develop.pocketsplit.R
 import com.develop.pocketsplit.model.User
 import com.develop.pocketsplit.ui.components.DeleteAccountDialog
 import com.develop.pocketsplit.ui.components.EditNameDialog
+import com.develop.pocketsplit.ui.components.SettingsRow
 import com.develop.pocketsplit.ui.theme.PocketSplitTheme
 import com.develop.pocketsplit.ui.viewmodel.AuthViewModel
 
@@ -36,7 +37,9 @@ import com.develop.pocketsplit.ui.viewmodel.AuthViewModel
 fun SettingsScreen(
     modifier: Modifier = Modifier,
     viewModel: AuthViewModel = viewModel(),
-    onSignedOut: () -> Unit = {}
+    onOpenAccount: () -> Unit = {},
+    onSignedOut: () -> Unit = {},
+    onSignIn: () -> Unit = {}
 ) {
     val user by viewModel.currentUser.collectAsStateWithLifecycle()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -46,13 +49,14 @@ fun SettingsScreen(
     SettingsContent(
         user = user,
         modifier = modifier,
+        onOpenAccountClick = onOpenAccount,
         onEditNameClick = { viewModel.clearMessages(); showEditName = true },
         onLogoutClick = {
             viewModel.logout()
             onSignedOut()
         },
         onDeleteAccountClick = { viewModel.clearMessages(); showDelete = true },
-        onSignInClick = onSignedOut
+        onSignInClick = onSignIn
     )
 
     if (showEditName) {
@@ -84,6 +88,7 @@ fun SettingsScreen(
 fun SettingsContent(
     user: User?,
     modifier: Modifier = Modifier,
+    onOpenAccountClick: () -> Unit = {},
     onEditNameClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
     onDeleteAccountClick: () -> Unit = {},
@@ -122,26 +127,11 @@ fun SettingsContent(
                 Text(stringResource(R.string.settings_sign_in))
             }
         } else {
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                color = MaterialTheme.colorScheme.surfaceVariant
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Text(
-                        text = user.name.ifBlank { stringResource(R.string.settings_user_fallback_name) },
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                    Text(
-                        text = user.email,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
+            SettingsRow(
+                title = user.name.ifBlank { stringResource(R.string.settings_user_fallback_name) },
+                supportingText = user.email,
+                onClick = onOpenAccountClick
+            )
             OutlinedButton(onClick = onEditNameClick, modifier = Modifier.fillMaxWidth()) {
                 Text(stringResource(R.string.settings_edit_name))
             }
